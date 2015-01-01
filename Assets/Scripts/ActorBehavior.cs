@@ -5,12 +5,12 @@ public class ActorBehavior : MonoBehaviour
 {
 	public const float STIMULUS_DECAY_RATE = 1f;	//The rate (points per second) at which stimulus decays
 
-	public enum State {Free, Grabbing, PerformingAction}
-
-	private State currentState = State.Free;
-
 	public float Arousal { get{ return arousal;} }
 	public float Stimulus { get{ return stimulus;} }
+
+	private bool performingAction = false;
+	private bool grabbingSomeone = false;
+	private bool beingGrabbed = false;
 
 	private float arousal;
 	private float stimulus;
@@ -19,6 +19,7 @@ public class ActorBehavior : MonoBehaviour
 
 	void Start()
 	{
+		StartAction<GropeSelf>();
 	}
 
 	void Update()
@@ -69,6 +70,32 @@ public class ActorBehavior : MonoBehaviour
 		}
 	}
 
+	public T StartAction<T>() where T : Action
+	{
+		//Starts performing an action.  Specify the classname of the action.  The class must extend Action.
+
+		//Throw an error if we're already performing an action
+		if (performingAction)
+		{
+			throw new AlreadyPerformingActionException();
+		}
+
+		T action = gameObject.AddComponent<T>();
+		performingAction = true;
+
+		return action;
+	}
+
+	public void StopAction()
+	{
+		//Stops the current action, if there is one.
+
+		if (performingAction)
+		{
+			performingAction = false;
+		}
+	}
+
 	private void Orgasm()
 	{
 		//TODO: Some kind of penalty for orgasming
@@ -83,6 +110,12 @@ public class NegativeStimulusException : System.Exception
 {
 	public NegativeStimulusException()
 		: base("Parameter for ActorBehavior.Stimulate(float) must be positive.")
-	{
-	}
+	{}
+}
+
+public class AlreadyPerformingActionException : System.Exception
+{
+	public AlreadyPerformingActionException()
+		: base("Actor is already performing an action.  Cannot start another one.")
+	{}
 }
