@@ -19,7 +19,6 @@ public class ActorBehavior : MonoBehaviour
 
 	void Start()
 	{
-		Stimulate(1);
 	}
 
 	void Update()
