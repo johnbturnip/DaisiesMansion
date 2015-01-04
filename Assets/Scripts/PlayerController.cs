@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
 	private ActorMotor motor;
 	private ActorBehavior actor;
 
-	public ActorBehavior debugTargetToGrab;
-	
+	private ActorBehavior selectedActor = null;
+
 	//Events
 	void Awake()
 	{
@@ -19,46 +19,12 @@ public class PlayerController : MonoBehaviour
 	
 	void Update()
 	{
-		//While Grabbing
-		if (actor.GrabbingSomeone)
-		{
-			WhileGrabbing();
-		}
+		//Update GUI buttons
+		UpdateGUIButtons();
 
-		//While Grabbed
-		if (actor.BeingGrabbed)
-		{
-			WhileGrabbed();
-		}
+		//Select the actor being clicked on
+		SelectActor();
 
-		//While Free
-		if (!actor.PerformingAction && !actor.GrabbingSomeone && !actor.BeingGrabbed)
-		{
-			WhileFree();
-		}
-
-	}
-
-	//Misc methods
-
-	private void WhileGrabbing()
-	{
-		//TODO: Controls while grabbing someone else
-	}
-
-	private void WhileGrabbed()
-	{
-		//TODO: Controls while being grabbed
-	}
-
-	private void WhileFree()
-	{
-		//DEBUG: Try grabbing
-		if (debugTargetToGrab != null)
-		{
-			actor.TryGrab(debugTargetToGrab);
-		}
-		
 		//Relay horizontal movement input.
 		float h = Input.GetAxisRaw("Horizontal");
 		
@@ -72,6 +38,63 @@ public class PlayerController : MonoBehaviour
 		else if (h < 0)
 		{
 			motor.LeftButton = true;
+		}
+	}
+
+	void OnGrabButton()
+	{
+		if (selectedActor != null)
+		{
+			actor.TryGrab(selectedActor);
+		}
+		else
+		{
+			Debug.Log("No selected actor");
+		}
+	}
+
+	void OnReleaseButton()
+	{
+		actor.ReleaseGrabTarget();
+	}
+
+	//Misc methods
+
+	private void UpdateGUIButtons()
+	{
+		//Enables/disables the GUI buttons
+
+		PlayerGUI.grabButton = !actor.GrabbingSomeone && selectedActor != null;
+		PlayerGUI.releaseButton = actor.GrabbingSomeone;
+	}
+
+	private void SelectActor()
+	{
+		//Selects the actor that you click on
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			const float CIRCLE_RADIUS = 1f;
+			
+			//Get the mouse's point
+			Vector3 mousePoint3D = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Vector2 mousePoint2D = new Vector2(mousePoint3D.x, mousePoint3D.y);
+			
+			//Get all objects clicked on
+			Collider2D[] hits = Physics2D.OverlapCircleAll(mousePoint2D, CIRCLE_RADIUS);
+			
+			//If there was an actor clicked on, set it as the selected target
+			foreach (Collider2D c in hits)
+			{
+				ActorBehavior a = c.GetComponent<ActorBehavior>();
+				
+				if (a != null)
+				{
+					selectedActor = a;
+					Debug.Log("Selected an actor");
+					break;
+				}
+			}
 		}
 	}
 }

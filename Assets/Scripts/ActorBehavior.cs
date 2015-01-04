@@ -44,7 +44,7 @@ public class ActorBehavior : MonoBehaviour
 	private ActorBehavior grabTarget = null;		//The actor the we are currently grabbing
 	private ActorBehavior grabber = null;			//The actor that is currently grabbing us
 	
-	private const float DEFAULT_GRAB_REACH = 1;		//In the future, certain things will be able to extend an actor's grab reach.  For now, it's a private constant.
+	private const float DEFAULT_GRAB_REACH = 2;		//In the future, certain things will be able to extend an actor's grab reach.  For now, it's a private constant.
 	
 	private float arousal;
 	private float stimulus;
@@ -53,7 +53,6 @@ public class ActorBehavior : MonoBehaviour
 
 	void Start()
 	{
-		StartAction<GropeSelf>();
 	}
 
 	void Update()
