@@ -8,13 +8,44 @@ public class ActorBehavior : MonoBehaviour
 	public const float MAX_AROUSAL = 100;
 	public const float MAX_STIMULUS = 100;
 
+	public float GrabReach
+	{
+		get { return DEFAULT_GRAB_REACH;}
+	}
+	
 	public float Arousal { get{ return arousal;} }
 	public float Stimulus { get{ return stimulus;} }
 
-	private bool performingAction = false;
-	private bool grabbingSomeone = false;
-	private bool beingGrabbed = false;
+	public bool PerformingAction
+	{
+		get { return performingAction;}
+	}
 
+	public ActorBehavior GrabTarget
+	{
+		get { return grabTarget;}
+	}
+	public ActorBehavior Grabber
+	{
+		get { return grabber;}
+	}
+	
+	public bool GrabbingSomeone
+	{
+		get { return GrabTarget != null;}
+	}
+	public bool BeingGrabbed
+	{	
+		get { return Grabber != null;}
+	}
+	
+	private bool performingAction = false;
+
+	private ActorBehavior grabTarget = null;		//The actor the we are currently grabbing
+	private ActorBehavior grabber = null;			//The actor that is currently grabbing us
+	
+	private const float DEFAULT_GRAB_REACH = 1;		//In the future, certain things will be able to extend an actor's grab reach.  For now, it's a private constant.
+	
 	private float arousal;
 	private float stimulus;
 
@@ -36,6 +67,44 @@ public class ActorBehavior : MonoBehaviour
 	}
 
 	//Misc methods
+
+	public void TryGrab(ActorBehavior target)
+	{
+		//Attempts to grab another actor.
+		
+		//Abort if trying to grab self.
+		if (target == this)
+		{
+			return;
+		}
+		
+		//Grab the target if she's close enough
+		if (Vector3.Distance(transform.position, target.transform.position) <= GrabReach)
+		{
+			grabTarget = target;
+			target.SetGrabber(this);
+		}
+	}
+
+	public void ReleaseGrabTarget()
+	{
+		//Releases the currently grabbed actor
+		
+		if (grabTarget != null)
+		{
+			grabTarget.SetGrabber(null);
+			grabTarget = null;
+		}
+	}
+
+	public void SetGrabber(ActorBehavior grabber)
+	{
+		//Sets who is currently grabbing this actor.
+		//DO NOT EVER CALL THIS METHOD, EXCEPT IN THE TryGrab() AND ReleaseGrabTarget() METHODS.
+		
+		this.grabber = grabber;
+	}
+
 
 	public void Arouse(float amount)
 	{

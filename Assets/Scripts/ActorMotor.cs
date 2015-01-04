@@ -49,14 +49,23 @@ public class ActorMotor : MonoBehaviour
 
 	void Update()
 	{
-		WalkingControls();
+		//If we're not grabbing or being grabbed, allow movement.
+		if (!actor.BeingGrabbed && !actor.GrabbingSomeone)
+		{
+			WalkingControls();
+		}
+		else
+		{
+			rigidbody2D.velocity = Vector2.zero;
+		}
+			
 	}
 
 	//Misc methods
 
 	public void Jump()
 	{
-		//makes the character jump if on the ground.
+		//TODO: makes the character jump if on the ground.
 		
 	}
 
