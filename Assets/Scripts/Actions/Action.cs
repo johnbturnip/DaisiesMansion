@@ -17,7 +17,7 @@ public abstract class Action : MonoBehaviour
 		owner = GetComponent<ActorBehavior>();
 		OnActionStart();
 	}
-
+	
 	//Misc methods
 
 	protected virtual void OnActionStart()

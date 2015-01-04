@@ -5,6 +5,9 @@ public class ActorBehavior : MonoBehaviour
 {
 	public const float STIMULUS_DECAY_RATE = 1f;	//The rate (points per second) at which stimulus decays
 
+	public const float MAX_AROUSAL = 100;
+	public const float MAX_STIMULUS = 100;
+
 	public float Arousal { get{ return arousal;} }
 	public float Stimulus { get{ return stimulus;} }
 
@@ -45,9 +48,9 @@ public class ActorBehavior : MonoBehaviour
 		{
 			arousal = 0;
 		}
-		else if (arousal > 100)
+		else if (arousal > MAX_AROUSAL)
 		{
-			arousal = 100;
+			arousal = MAX_AROUSAL;
 		}
 	}
 
@@ -64,7 +67,7 @@ public class ActorBehavior : MonoBehaviour
 		stimulus += amount;
 
 		//Orgasm when stimulus is 100+
-		if (stimulus >= 100)
+		if (stimulus >= MAX_STIMULUS)
 		{
 			Orgasm();
 		}

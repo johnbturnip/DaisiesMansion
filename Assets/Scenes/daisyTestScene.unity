@@ -466,7 +466,7 @@ GameObject:
   - 212: {fileID: 1835472051}
   - 114: {fileID: 1835472050}
   m_Layer: 0
-  m_Name: test_player
+  m_Name: test_actor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,6 +553,9 @@ GameObject:
   - 222: {fileID: 1902032505}
   - 212: {fileID: 1902032503}
   - 114: {fileID: 1902032504}
+  - 50: {fileID: 1902032508}
+  - 114: {fileID: 1902032507}
+  - 114: {fileID: 1902032509}
   m_Layer: 0
   m_Name: test_player
   m_TagString: Untagged
@@ -629,6 +632,43 @@ RectTransform:
   m_AnchoredPosition: {x: .409999996, y: 1.57000005}
   m_SizeDelta: {x: 1.46000004, y: 3.1400001}
   m_Pivot: {x: .5, y: .5}
+--- !u!114 &1902032507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1902032501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77bc04a6eb0ed6a49b0c7a82c9ec257f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &1902032508
+Rigidbody2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1902032501}
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: .0500000007
+  m_GravityScale: 0
+  m_FixedAngle: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+--- !u!114 &1902032509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1902032501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550d06a7e25482c49853b2243f1e0895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2036762443
 GameObject:
   m_ObjectHideFlags: 0
