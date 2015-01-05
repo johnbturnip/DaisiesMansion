@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Actions\Action.cs" />
      <Compile Include="Assets\Scripts\Actions\GropeSelf.cs" />
+     <Compile Include="Assets\Scripts\Actions\LickVagina.cs" />
+     <Compile Include="Assets\Scripts\Actions\SexAction.cs" />
      <Compile Include="Assets\Scripts\ActorBehavior.cs" />
      <Compile Include="Assets\Scripts\ActorInfoDrawer.cs" />
      <Compile Include="Assets\Scripts\ActorMotor.cs" />

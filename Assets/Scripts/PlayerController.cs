@@ -58,14 +58,21 @@ public class PlayerController : MonoBehaviour
 		actor.ReleaseGrabTarget();
 	}
 
+	void OnLickVaginaButton()
+	{
+		actor.StartAction<LickVagina>();
+	}
+
 	//Misc methods
 
 	private void UpdateGUIButtons()
 	{
 		//Enables/disables the GUI buttons
 
-		PlayerGUI.grabButton = !actor.GrabbingSomeone && selectedActor != null;
-		PlayerGUI.releaseButton = actor.GrabbingSomeone;
+		PlayerGUI.grabButton = !actor.GrabbingSomeone && selectedActor != null && !actor.PerformingAction;
+		PlayerGUI.releaseButton = actor.GrabbingSomeone && !actor.PerformingAction;
+
+		PlayerGUI.actionButtons = actor.GrabbingSomeone && ! actor.PerformingAction;
 	}
 
 	private void SelectActor()
